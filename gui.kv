@@ -1,0 +1,129 @@
+#:import Factory kivy.factory.Factory
+
+<Label>
+#    background_color: (225/255, 218/255, 230/255,1)
+    color: '#00000'
+    font_size: 20
+
+#
+<TextInput>
+    multiline:False
+    write_tab: False
+
+<Button>
+    font_size: 20
+	background_normal: ''
+	background_color: '#b263f7'
+	color: (225/255, 218/255, 230/255,1)
+	bold:False
+
+
+<Bio>
+    id : my_root
+    name: "home"
+    path:path
+    outPut:outPut
+    record:record
+    BoxLayout:
+        orientation: "vertical"
+        size: root.width, root.height
+
+        padding: 50
+        spacing: 20
+
+        canvas.before:
+            Color:
+                rgba: (225/255, 218/255, 230/255,1)
+            Rectangle:
+                pos: self.pos
+                size: self.size
+
+        Label:
+            text: "BioPython"
+            bold:True
+            size_hint:(1, 0.2)
+
+        GridLayout:
+            cols:2
+            spacing: 15
+
+
+            GridLayout:
+                cols:1
+                spacing: 25
+
+                GridLayout:
+                    cols:3
+                    padding: 10
+                    spacing: 10
+                    size_hint:(1, 0.3)
+
+
+                    Label:
+                        text: 'File Path : '
+                        size_hint:(0.5, 0.3)
+
+                    TextInput:
+                        id: path
+                        input_type:'text'
+
+
+                    Button:
+                        text: "Read"
+                        size_hint:(0.5, 0.3)
+                        on_press: root.readFile()
+
+
+                GridLayout:
+                    cols:2
+                    spacing: 20
+                    size_hint:(1, 0.8)
+
+                    TextInput:
+                        id: record
+                        input_type:'number'
+                        input_filter:'int'
+                        size_hint:(1, 0.3)
+
+                    Button:
+                        text: "Read By Id"
+                        on_press :root.readByID()
+                        size_hint:(1, 0.3)
+
+                    Button:
+                        text: "Find GC"
+                        size_hint:(1, 0.3)
+                        on_press : root.showGC()
+
+                    Button:
+                        text: "Complement DNA"
+                        size_hint:(1, 0.3)
+                        on_press : root.complement()
+
+                    Button:
+                        text: "Transcription (RNA)"
+                        size_hint:(1, 0.3)
+                        on_press : root.transcription()
+                    Button:
+                        text: "Save"
+                        size_hint:(1, 0.3)
+                        on_press : root.save()
+
+                Label:
+                    id : outPut
+                    text: "The OutPut"
+#                    size_hint_y: None
+                    text_size:self.width, None
+                    height:self.texture_size[1]
+                    font_size:15
+
+            FileChooserListView:
+                size: root.width, root.height
+                size_hint:(0.5, 0.8)
+                id: filechooser
+                on_selection :  path.text = self.selection and self.selection[0] or ''
+
+
+
+
+
